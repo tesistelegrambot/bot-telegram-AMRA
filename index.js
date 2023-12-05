@@ -17,6 +17,12 @@ const bot = new telegramBot(TELEGRAM_TOKEN, { polling: true });
 //declaramos una instancia de telegramBot, basicamente estamos inicializando el bot, pasandole el token y
 //configurando el "polling" en true(verdadero), que significa que constantemente está escuchando mensajes que
 //le enviemos a nuestro bot
+const port = process.env.PORT || 8080;
+const express = require("express");
+const app = express();
+app.get("/health", (req, res) => {
+  res.sendStatus(200);
+});
 
 const opciones_inicio = {
   //opciones vienen siendo las interacciones luego de "En que puedo ayudarte?"
@@ -676,4 +682,7 @@ bot.onText(/\/boletin$/, (msg) => {
     }),
   };
   bot.sendMessage(chatId, "Información sobre boletin...", opciones_boletin);
+});
+app.listen(port, () => {
+  console.log(`Bot corriendo correctamente, puesto ${port}`);
 });
