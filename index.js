@@ -37,25 +37,26 @@ const opciones_inicio = {
     ],
   }),
 };
-const now = new Date();
-const options = {
-  timeZone: "America/Caracas",
-  hour: "numeric",
-  hour12: false,
-};
-const formatter = new Intl.DateTimeFormat("es-VE", options);
-const hour = formatter.format(now);
 
-let saludo;
-if (hour >= 6 && hour < 12) {
-  saludo = "Buenos días";
-} else if (hour >= 12 && hour < 18) {
-  saludo = "Buenas tardes";
-} else {
-  saludo = "Buenas noches";
-}
 bot.onText(/\/start$/, (msg) => {
   try {
+    const now = new Date();
+    const options = {
+      timeZone: "America/Caracas",
+      hour: "numeric",
+      hour12: false,
+    };
+    const formatter = new Intl.DateTimeFormat("es-VE", options);
+    const hour = formatter.format(now);
+
+    let saludo;
+    if (hour >= 6 && hour < 12) {
+      saludo = "Buenos días";
+    } else if (hour >= 12 && hour < 18) {
+      saludo = "Buenas tardes";
+    } else {
+      saludo = "Buenas noches";
+    }
     //le decimos al bot que escuche el comando de /start (inicio)
     const chatId = msg.chat.id;
     //declaramos el id del chat para saber a quien enviarle el mensaje, en este caso
@@ -247,6 +248,23 @@ bot.on("callback_query", (callbackQuery) => {
       reply_markup: opciones_boletin.reply_markup,
     });
   } else if (comando === "/volver") {
+    const now = new Date();
+    const options = {
+      timeZone: "America/Caracas",
+      hour: "numeric",
+      hour12: false,
+    };
+    const formatter = new Intl.DateTimeFormat("es-VE", options);
+    const hour = formatter.format(now);
+
+    let saludo;
+    if (hour >= 6 && hour < 12) {
+      saludo = "Buenos días";
+    } else if (hour >= 12 && hour < 18) {
+      saludo = "Buenas tardes";
+    } else {
+      saludo = "Buenas noches";
+    }
     bot.editMessageText(`${saludo} ¿En qué puedo ayudarle?`, {
       chat_id: chatId,
       message_id: messageId,
