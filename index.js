@@ -24,16 +24,29 @@ app.get("/health", (req, res) => {
   res.sendStatus(200);
 });
 
+const sectionSelector = (name) => {
+  return {
+    //opciones vienen siendo las interacciones luego de "En que puedo ayudarte?"
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [{ text: "Sección 'A'", callback_data: `/${name},A` }],
+        //por ejemplo esta interacción se llama Horario y ejecuta el comando /horario el cual te responderá algo
+        [{ text: "Sección 'B'", callback_data: `/${name},B` }],
+      ],
+    }),
+  };
+};
+
 const opciones_inicio = {
   //opciones vienen siendo las interacciones luego de "En que puedo ayudarte?"
   reply_markup: JSON.stringify({
     inline_keyboard: [
-      [{ text: "Horario", callback_data: "/horario" }],
+      [{ text: "Horario", callback_data: "/section,horario" }],
       //por ejemplo esta interacción se llama Horario y ejecuta el comando /horario el cual te responderá algo
-      [{ text: "Constancias", callback_data: "/constancias" }],
-      [{ text: "Misa", callback_data: "/misa" }],
-      [{ text: "Fiesta", callback_data: "/fiesta" }],
-      [{ text: "Boletín", callback_data: "/boletin" }],
+      [{ text: "Constancias", callback_data: "/section,constancias" }],
+      [{ text: "Misa", callback_data: "/section,misa" }],
+      [{ text: "Fiesta", callback_data: "/section,fiesta" }],
+      [{ text: "Boletín", callback_data: "/section,boletin" }],
     ],
   }),
 };
@@ -73,45 +86,91 @@ bot.onText(/\/start$/, (msg) => {
     console.log(error);
   }
 });
-//
-//
-//
-//
-//Escuchando comandos principales = /horario, /misa, etc...
-//
-//
-//
-//
-bot.on("callback_query", (callbackQuery) => {
-  //escuchando todas las acciones que vienen de presionar botones
-  const opciones_horario = {
+
+// declarando opciones
+const opciones_horario = {
+  A: {
     //Botones que vienen en la opción de horario"
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [
           {
-            text: "Más información sobre actividad 1",
-            callback_data: "/actividad1",
+            text: "Más información del lunes",
+            callback_data: "/actividad1,A",
           },
         ],
         [
           {
-            text: "Más información sobre actividad 2",
-            callback_data: "/actividad2",
+            text: "Más información del martes",
+            callback_data: "/actividad2,A",
           },
         ],
         [
           {
-            text: "Más información sobre actividad 3",
-            callback_data: "/actividad3",
+            text: "Más información del miércoles",
+            callback_data: "disabled",
+            callback_game: {},
+          },
+        ],
+        [
+          {
+            text: "Más información del jueves",
+            callback_data: "/actividad4,A",
+          },
+        ],
+        [
+          {
+            text: "Más información del viernes",
+            callback_data: "/actividad5,A",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
       ],
     }),
-  };
-  const opciones_constancias = {
+  },
+  B: {
     //Botones que vienen en la opción de horario"
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [
+          {
+            text: "Más información del lunes",
+            callback_data: "/actividad1,B",
+          },
+        ],
+        [
+          {
+            text: "Más información del martes",
+            callback_data: "/actividad2,B",
+          },
+        ],
+        [
+          {
+            text: "Más información del miércoles",
+            callback_data: "disabled",
+            callback_game: {},
+          },
+        ],
+        [
+          {
+            text: "Más información del jueves",
+            callback_data: "/actividad4,B",
+          },
+        ],
+        [
+          {
+            text: "Más información del viernes",
+            callback_data: "/actividad5,B",
+          },
+        ],
+        [{ text: "Volver al inicio", callback_data: "/volver" }],
+      ],
+    }),
+  },
+};
+const opciones_constancias = {
+  //Botones que vienen en la opción de horario"
+  A: {
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [
@@ -123,9 +182,24 @@ bot.on("callback_query", (callbackQuery) => {
         [{ text: "Volver al inicio", callback_data: "/volver" }],
       ],
     }),
-  };
-  const opciones_misa = {
-    //Botones que vienen en la opción de horario"
+  },
+  B: {
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [
+          {
+            text: "Más información",
+            callback_data: "/constancia1",
+          },
+        ],
+        [{ text: "Volver al inicio", callback_data: "/volver" }],
+      ],
+    }),
+  },
+};
+const opciones_misa = {
+  //Botones que vienen en la opción de horario"
+  A: {
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [
@@ -149,9 +223,36 @@ bot.on("callback_query", (callbackQuery) => {
         [{ text: "Volver al inicio", callback_data: "/volver" }],
       ],
     }),
-  };
-  const opciones_fiesta = {
-    //Botones que vienen en la opción de horario"
+  },
+  B: {
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [
+          {
+            text: "Más información sobre la misa 1",
+            callback_data: "/misa1",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre la misa 2",
+            callback_data: "/misa2",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre la misa 3",
+            callback_data: "/misa3",
+          },
+        ],
+        [{ text: "Volver al inicio", callback_data: "/volver" }],
+      ],
+    }),
+  },
+};
+const opciones_fiesta = {
+  //Botones que vienen en la opción de horario"
+  A: {
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [
@@ -175,9 +276,36 @@ bot.on("callback_query", (callbackQuery) => {
         [{ text: "Volver al inicio", callback_data: "/volver" }],
       ],
     }),
-  };
-  const opciones_boletin = {
-    //Botones que vienen en la opción de horario"
+  },
+  B: {
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [
+          {
+            text: "Más información sobre la fiesta 1",
+            callback_data: "/fiesta1",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre la fiesta 2",
+            callback_data: "/fiesta2",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre la fiesta 3",
+            callback_data: "/fiesta3",
+          },
+        ],
+        [{ text: "Volver al inicio", callback_data: "/volver" }],
+      ],
+    }),
+  },
+};
+const opciones_boletin = {
+  //Botones que vienen en la opción de horario"
+  A: {
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [
@@ -189,35 +317,67 @@ bot.on("callback_query", (callbackQuery) => {
         [{ text: "Volver al inicio", callback_data: "/volver" }],
       ],
     }),
-  };
+  },
+  B: {
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [
+          {
+            text: "Más información sobre el boletín",
+            callback_data: "/boletin1",
+          },
+        ],
+        [{ text: "Volver al inicio", callback_data: "/volver" }],
+      ],
+    }),
+  },
+};
+//
+//
+//
+//
+//Escuchando comandos principales = /horario, /misa, etc...
+//
+//
+//
+//
+bot.on("callback_query", (callbackQuery) => {
+  //escuchando todas las acciones que vienen de presionar botones
+
   const messageId = callbackQuery.message.message_id;
   //el id del mensaje lo podemos usar para editar/borrar mensajes
   const chatId = callbackQuery.message.chat.id;
   const comando = callbackQuery.data;
   //este es el comando enviado, por ejemplo /horario o /misa
-  if (comando === "/horario") {
+  const section = comando.split(",")[1];
+  console.log(section);
+  if (comando.startsWith("/section")) {
+    bot.editMessageText(`Seleccione una sección`, {
+      chat_id: chatId,
+      message_id: messageId,
+      reply_markup: sectionSelector(section).reply_markup,
+    });
+    //respondemos esto y le pasamos un botón con el que puede volver
+  } else if (comando.startsWith("/horario")) {
     bot.editMessageText(
-      `Información sobre horarios... \n
-      Actividad 1 - fecha xx/xx/xx xx:xx \n
-      Actividad 2 - fecha xx/xx/xx xx:xx \n
-      Actividad 2 - fecha xx/xx/xx xx:xx \n
+      `🏫 Información sobre horarios de la sección '${section}': \n\n🟢Lunes, de 7:00AM hasta 12:00PM\n\n🟢Martes, de 7:00AM hasta 5:00PM\n\n🔴Miércoles, no hay clases\n\n🟢Jueves, de 7:00AM hasta 9:00AM\n\n🟢Viernes, de 10:00AM hasta 12:00PM
       `,
       {
         chat_id: chatId,
         message_id: messageId,
-        reply_markup: opciones_horario.reply_markup,
+        reply_markup: opciones_horario[section].reply_markup,
       }
     );
     //respondemos esto y le pasamos un botón con el que puede volver
-  } else if (comando === "/constancias") {
+  } else if (comando.startsWith("/constancias")) {
     bot.editMessageText("Información sobre constancias...", {
       chat_id: chatId,
       message_id: messageId,
-      reply_markup: opciones_constancias.reply_markup,
+      reply_markup: opciones_constancias[section].reply_markup,
     });
-  } else if (comando === "/misa") {
+  } else if (comando.startsWith("/misa")) {
     bot.editMessageText(
-      `Información sobre misas... \n
+      `Información sobre misas de la sección ${section}... \n
       misa 1 - fecha xx/xx/xx xx:xx \n
       misa 2 - fecha xx/xx/xx xx:xx \n
       misa 2 - fecha xx/xx/xx xx:xx \n
@@ -225,12 +385,12 @@ bot.on("callback_query", (callbackQuery) => {
       {
         chat_id: chatId,
         message_id: messageId,
-        reply_markup: opciones_misa.reply_markup,
+        reply_markup: opciones_misa[section].reply_markup,
       }
     );
-  } else if (comando === "/fiesta") {
+  } else if (comando.startsWith("/fiesta")) {
     bot.editMessageText(
-      `Información sobre las fiestas... \n
+      `Información sobre las fiestas de la sección ${section}... \n
       fiesta 1 - fecha xx/xx/xx xx:xx \n
       fiesta 2 - fecha xx/xx/xx xx:xx \n
       fiesta 2 - fecha xx/xx/xx xx:xx \n
@@ -238,15 +398,18 @@ bot.on("callback_query", (callbackQuery) => {
       {
         chat_id: chatId,
         message_id: messageId,
-        reply_markup: opciones_fiesta.reply_markup,
+        reply_markup: opciones_fiesta[section].reply_markup,
       }
     );
-  } else if (comando === "/boletin") {
-    bot.editMessageText("Información sobre boletin...", {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_boletin.reply_markup,
-    });
+  } else if (comando.startsWith("/boletin")) {
+    bot.editMessageText(
+      `Información sobre boletin de la sección ${section}...`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_boletin[section].reply_markup,
+      }
+    );
   } else if (comando === "/volver") {
     const now = new Date();
     const options = {
@@ -284,13 +447,24 @@ bot.on("callback_query", (callbackQuery) => {
 bot.on("callback_query", (callbackQuery) => {
   //escuchando todas las acciones que vienen de presionar botones
   const opciones_actividad = {
-    //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a horario", callback_data: "/horario" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      //Botones que vienen en la opción de horario"
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a horario", callback_data: "/horario,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      //Botones que vienen en la opción de horario"
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a horario", callback_data: "/horario,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_constancias = {
     //Botones que vienen en la opción de horario"
@@ -333,28 +507,36 @@ bot.on("callback_query", (callbackQuery) => {
   //el id del mensaje lo podemos usar para editar/borrar mensajes
   const chatId = callbackQuery.message.chat.id;
   const comando = callbackQuery.data;
+  const section = comando.split(",")[1];
+
   //este es el comando enviado, por ejemplo /horario o /misa
-  if (comando === "/actividad1") {
-    bot.editMessageText(`Más información sobre actividad 1...`, {
+  if (comando.startsWith("/actividad1")) {
+    bot.editMessageText(`Materias del dia lunes:...`, {
       chat_id: chatId,
       message_id: messageId,
-      reply_markup: opciones_actividad.reply_markup,
+      reply_markup: opciones_actividad[section].reply_markup,
     });
     //respondemos esto y le pasamos un botón con el que puede volver
-  } else if (comando === "/actividad2") {
-    bot.editMessageText(`Más información sobre actividad 2...`, {
+  } else if (comando.startsWith("/actividad2")) {
+    bot.editMessageText(`Materias del dia martes:...`, {
       chat_id: chatId,
       message_id: messageId,
-      reply_markup: opciones_actividad.reply_markup,
+      reply_markup: opciones_actividad[section].reply_markup,
     });
     //respondemos esto y le pasamos un botón con el que puede volver
-  } else if (comando === "/actividad3") {
-    bot.editMessageText(`Más información sobre actividad 1...`, {
+  } else if (comando.startsWith("/actividad4")) {
+    bot.editMessageText(`Materias del dia jueves:...`, {
       chat_id: chatId,
       message_id: messageId,
-      reply_markup: opciones_actividad.reply_markup,
+      reply_markup: opciones_actividad[section].reply_markup,
     });
-  } else if (comando === "/constancia1") {
+  } else if (comando.startsWith("/actividad5")) {
+    bot.editMessageText(`Materias del dia viernes:...`, {
+      chat_id: chatId,
+      message_id: messageId,
+      reply_markup: opciones_actividad[section].reply_markup,
+    });
+  } else if (comando.startsWith("/constancia1")) {
     bot.editMessageText(`Más Información sobre las constancias`, {
       chat_id: chatId,
       message_id: messageId,
@@ -417,24 +599,45 @@ bot.on("callback_query", (callbackQuery) => {
   //escuchando todas las acciones que vienen de presionar botones
   const opciones_actividad = {
     //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a horario", callback_data: "/horario" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a horario", callback_data: "/horario,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a horario", callback_data: "/horario,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_constancias = {
     //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a constancias", callback_data: "/constancia" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a constancias", callback_data: "/constancia,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a constancias", callback_data: "/constancia,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_misa = {
     //Botones que vienen en la opción de horario"
+
     reply_markup: JSON.stringify({
       inline_keyboard: [
         [{ text: "Volver a misas", callback_data: "/misa" }],
@@ -545,162 +748,13 @@ bot.on("callback_query", (callbackQuery) => {
 //
 //
 //
-bot.onText(/\/horario$/, (msg) => {
+
+bot.onText(/^\/sec/, (msg) => {
   const chatId = msg.chat.id;
+  const section = msg.text.split("_")[1];
+  console.log(section);
+  console.log(msg.text);
   try {
-    const opciones_horario = {
-      //Botones que vienen en la opción de horario"
-      reply_markup: JSON.stringify({
-        inline_keyboard: [
-          [
-            {
-              text: "Más información sobre actividad 1",
-              callback_data: "/actividad1",
-            },
-          ],
-          [
-            {
-              text: "Más información sobre actividad 2",
-              callback_data: "/actividad2",
-            },
-          ],
-          [
-            {
-              text: "Más información sobre actividad 3",
-              callback_data: "/actividad3",
-            },
-          ],
-          [{ text: "Volver al inicio", callback_data: "/volver" }],
-        ],
-      }),
-    };
-    bot.sendMessage(
-      chatId,
-      `Información sobre horarios... \n
-      Actividad 1 - fecha xx/xx/xx xx:xx \n
-      Actividad 2 - fecha xx/xx/xx xx:xx \n
-      Actividad 2 - fecha xx/xx/xx xx:xx \n
-      `,
-      opciones_horario
-    );
+    bot.sendMessage(chatId, "Seleccione una sección", sectionSelector(section));
   } catch (error) {}
-});
-bot.onText(/\/constancias$/, (msg) => {
-  const chatId = msg.chat.id;
-  const opciones_constancias = {
-    //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [
-          {
-            text: "Más información",
-            callback_data: "/constancia1",
-          },
-        ],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
-  };
-  bot.sendMessage(
-    chatId,
-    "Información sobre constancias...",
-    opciones_constancias
-  );
-});
-bot.onText(/\/misa$/, (msg) => {
-  const chatId = msg.chat.id;
-  const opciones_misa = {
-    //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [
-          {
-            text: "Más información sobre la misa 1",
-            callback_data: "/misa1",
-          },
-        ],
-        [
-          {
-            text: "Más información sobre la misa 2",
-            callback_data: "/misa2",
-          },
-        ],
-        [
-          {
-            text: "Más información sobre la misa 3",
-            callback_data: "/misa3",
-          },
-        ],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
-  };
-  bot.sendMessage(
-    chatId,
-    `Información sobre las misas... \n
-      misa 1 - fecha xx/xx/xx xx:xx \n
-      misa 2 - fecha xx/xx/xx xx:xx \n
-      misa 2 - fecha xx/xx/xx xx:xx \n
-      `,
-    opciones_misa
-  );
-});
-bot.onText(/\/fiesta$/, (msg) => {
-  const chatId = msg.chat.id;
-  const opciones_fiesta = {
-    //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [
-          {
-            text: "Más información sobre la fiesta 1",
-            callback_data: "/fiesta1",
-          },
-        ],
-        [
-          {
-            text: "Más información sobre la fiesta 2",
-            callback_data: "/fiesta2",
-          },
-        ],
-        [
-          {
-            text: "Más información sobre la fiesta 3",
-            callback_data: "/fiesta3",
-          },
-        ],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
-  };
-  bot.sendMessage(
-    chatId,
-    `Información sobre las fiestas... \n
-      fiesta 1 - fecha xx/xx/xx xx:xx \n
-      fiesta 2 - fecha xx/xx/xx xx:xx \n
-      fiesta 2 - fecha xx/xx/xx xx:xx \n
-      `,
-    opciones_fiesta
-  );
-});
-bot.onText(/\/boletin$/, (msg) => {
-  const chatId = msg.chat.id;
-  const opciones_boletin = {
-    //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [
-          {
-            text: "Más información sobre el boletín",
-            callback_data: "/boletin1",
-          },
-        ],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
-  };
-  bot.sendMessage(chatId, "Información sobre boletin...", opciones_boletin);
-});
-app.listen(port, () => {
-  console.log(`Bot corriendo correctamente, puesto ${port}`);
 });
