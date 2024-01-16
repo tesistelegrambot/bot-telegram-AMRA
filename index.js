@@ -758,3 +758,6 @@ bot.onText(/^\/sec/, (msg) => {
     bot.sendMessage(chatId, "Seleccione una sección", sectionSelector(section));
   } catch (error) {}
 });
+app.listen(port, () => {
+  console.log(`Bot corriendo correctamente, puerto ${port}`);
+});
