@@ -175,8 +175,14 @@ const opciones_constancias = {
       inline_keyboard: [
         [
           {
-            text: "Más información",
-            callback_data: "/constancia1",
+            text: "Más información sobre primaria",
+            callback_data: "/constancia1,A",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre secundaria",
+            callback_data: "/constancia2,A",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -188,8 +194,14 @@ const opciones_constancias = {
       inline_keyboard: [
         [
           {
-            text: "Más información",
-            callback_data: "/constancia1",
+            text: "Más información sobre primaria",
+            callback_data: "/constancia1,B",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre secundaria",
+            callback_data: "/constancia2,B",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -204,20 +216,20 @@ const opciones_misa = {
       inline_keyboard: [
         [
           {
-            text: "Más información sobre la misa 1",
-            callback_data: "/misa1",
+            text: "Más información sobre misa del Lunes",
+            callback_data: "/misa1,A",
           },
         ],
         [
           {
-            text: "Más información sobre la misa 2",
-            callback_data: "/misa2",
+            text: "Más información sobre misa del Jueves",
+            callback_data: "/misa2,A",
           },
         ],
         [
           {
-            text: "Más información sobre la misa 3",
-            callback_data: "/misa3",
+            text: "Más información sobre misa del Domingo",
+            callback_data: "/misa3,A",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -229,20 +241,20 @@ const opciones_misa = {
       inline_keyboard: [
         [
           {
-            text: "Más información sobre la misa 1",
-            callback_data: "/misa1",
+            text: "Más información sobre misa del Lunes",
+            callback_data: "/misa1,B",
           },
         ],
         [
           {
-            text: "Más información sobre la misa 2",
-            callback_data: "/misa2",
+            text: "Más información sobre misa del Jueves",
+            callback_data: "/misa2,B",
           },
         ],
         [
           {
-            text: "Más información sobre la misa 3",
-            callback_data: "/misa3",
+            text: "Más información sobre misa del Domingo",
+            callback_data: "/misa3,B",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -257,20 +269,32 @@ const opciones_fiesta = {
       inline_keyboard: [
         [
           {
-            text: "Más información sobre la fiesta 1",
-            callback_data: "/fiesta1",
+            text: "Más información sobre el carnaval",
+            callback_data: "/fiesta1,A",
           },
         ],
         [
           {
-            text: "Más información sobre la fiesta 2",
-            callback_data: "/fiesta2",
+            text: "Más información sobre semana santa",
+            callback_data: "/fiesta2,A",
           },
         ],
         [
           {
-            text: "Más información sobre la fiesta 3",
-            callback_data: "/fiesta3",
+            text: "Más información sobre Pre defensa del grupo 6",
+            callback_data: "/fiesta3,A",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre defensa de tesis",
+            callback_data: "/fiesta4,A",
+          },
+        ],
+        [
+          {
+            text: "Más información sobre la graduación",
+            callback_data: "/fiesta5,A",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -282,20 +306,34 @@ const opciones_fiesta = {
       inline_keyboard: [
         [
           {
-            text: "Más información sobre la fiesta 1",
-            callback_data: "/fiesta1",
+            text: "Más información sobre el carnaval",
+            callback_data: "/fiesta1,B",
           },
         ],
         [
           {
-            text: "Más información sobre la fiesta 2",
-            callback_data: "/fiesta2",
+            text: "Más información sobre semana santa",
+            callback_data: "/fiesta2,B",
           },
         ],
         [
           {
-            text: "Más información sobre la fiesta 3",
-            callback_data: "/fiesta3",
+            text: "Más información sobre Pre defensa del grupo 6",
+            callback_data: "/fiesta3,B",
+          },
+        ],
+
+        [
+          {
+            text: "Más información sobre defensa de tesis",
+            callback_data: "/fiesta4,B",
+          },
+        ],
+
+        [
+          {
+            text: "Más información sobre la graduación",
+            callback_data: "/fiesta5,B",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -311,7 +349,7 @@ const opciones_boletin = {
         [
           {
             text: "Más información sobre el boletín",
-            callback_data: "/boletin1",
+            callback_data: "/boletin1,A",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -324,7 +362,7 @@ const opciones_boletin = {
         [
           {
             text: "Más información sobre el boletín",
-            callback_data: "/boletin1",
+            callback_data: "/boletin1,B",
           },
         ],
         [{ text: "Volver al inicio", callback_data: "/volver" }],
@@ -370,17 +408,17 @@ bot.on("callback_query", (callbackQuery) => {
     );
     //respondemos esto y le pasamos un botón con el que puede volver
   } else if (comando.startsWith("/constancias")) {
-    bot.editMessageText("Información sobre constancias...", {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_constancias[section].reply_markup,
-    });
+    bot.editMessageText(
+      `Información sobre constancias...de la sección ${section}...\n\n*Primaria - Lunes y Martes (3$)\n\n*Secundaria - Jueves y viernes (5$)`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_constancias[section].reply_markup,
+      }
+    );
   } else if (comando.startsWith("/misa")) {
     bot.editMessageText(
-      `Información sobre misas de la sección ${section}... \n
-      misa 1 - fecha xx/xx/xx xx:xx \n
-      misa 2 - fecha xx/xx/xx xx:xx \n
-      misa 2 - fecha xx/xx/xx xx:xx \n
+      `Información sobre misas de la sección ${section}...\n\n*Lunes\n\n*Jueves\n\n*Domingo
       `,
       {
         chat_id: chatId,
@@ -390,11 +428,7 @@ bot.on("callback_query", (callbackQuery) => {
     );
   } else if (comando.startsWith("/fiesta")) {
     bot.editMessageText(
-      `Información sobre las fiestas de la sección ${section}... \n
-      fiesta 1 - fecha xx/xx/xx xx:xx \n
-      fiesta 2 - fecha xx/xx/xx xx:xx \n
-      fiesta 2 - fecha xx/xx/xx xx:xx \n
-      `,
+      `Información sobre las fiestas de la sección ${section}...\n\n*Carnavales - 12/02/2024 al 13/02/2024\n\n*Semana santa - 24/03/2024 al 30/03/2024 \n\n*Pre defensas de tesis\n\n*Defensa de tesis - 27/02/2024 al 29/02/2024\n\n*Graduación`,
       {
         chat_id: chatId,
         message_id: messageId,
@@ -403,7 +437,7 @@ bot.on("callback_query", (callbackQuery) => {
     );
   } else if (comando.startsWith("/boletin")) {
     bot.editMessageText(
-      `Información sobre boletin de la sección ${section}...`,
+      `Información sobre boletin de la sección ${section}...\n\n*Viernes (10$)`,
       {
         chat_id: chatId,
         message_id: messageId,
@@ -468,39 +502,79 @@ bot.on("callback_query", (callbackQuery) => {
   };
   const opciones_constancias = {
     //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a constancias", callback_data: "/constancias" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a constancias", callback_data: "/constancias,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a constancias", callback_data: "/constancias,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_misa = {
     //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a misas", callback_data: "/misa" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a misas", callback_data: "/misa,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a misas", callback_data: "/misa,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_fiesta = {
     //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a fiestas", callback_data: "/fiesta" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a fiestas", callback_data: "/fiesta,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a fiestas", callback_data: "/fiesta,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_boletin = {
     //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a boletin", callback_data: "/boletin" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a boletin", callback_data: "/boletin,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a boletin", callback_data: "/boletin,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
 
   const messageId = callbackQuery.message.message_id;
@@ -537,53 +611,104 @@ bot.on("callback_query", (callbackQuery) => {
       reply_markup: opciones_actividad[section].reply_markup,
     });
   } else if (comando.startsWith("/constancia1")) {
-    bot.editMessageText(`Más Información sobre las constancias`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_constancias.reply_markup,
-    });
-  } else if (comando === "/misa1") {
-    bot.editMessageText(`Más información sobre misa 1...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_misa.reply_markup,
-    });
-  } else if (comando === "/misa2") {
-    bot.editMessageText(`Más información sobre misa 2...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_misa.reply_markup,
-    });
-  } else if (comando === "/misa3") {
-    bot.editMessageText(`Más información sobre misa 3...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_misa.reply_markup,
-    });
-  } else if (comando === "/fiesta1") {
-    bot.editMessageText(`Información sobre la fiesta 1...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_fiesta.reply_markup,
-    });
-  } else if (comando === "/fiesta2") {
-    bot.editMessageText(`Información sobre la fiesta 2...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_fiesta.reply_markup,
-    });
-  } else if (comando === "/fiesta3") {
-    bot.editMessageText(`Información sobre la fiesta 3...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_fiesta.reply_markup,
-    });
-  } else if (comando === "/boletin1") {
-    bot.editMessageText(`Mas información sobre los boletines...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_actividad.reply_markup,
-    });
+    bot.editMessageText(
+      `¡Atención a todos los padres y estudiantes de primaria! Les informamos que podrán retirar las constancias de estudio los días lunes y martes. Para obtener la constancia, se requerirá un pago de 3 dólares por cada copia. Este monto ayudará a cubrir los gastos administrativos asociados. Asegúrense de traer el dinero exacto al momento de recoger la constancia. Agradecemos su colaboración y les recordamos que la constancia es un documento importante para futuros trámites académicos.`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_constancias[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/constancia2")) {
+    bot.editMessageText(
+      `¡Anuncio importante para los estudiantes de secundaria y sus familias! Les informamos que podrán retirar las constancias de estudio los días jueves y viernes. Para obtener la constancia, se requerirá un pago de 5 dólares por cada copia. Este monto contribuirá a cubrir los costos administrativos y de impresión. Por favor, asegúrense de traer la cantidad exacta al momento de recoger la constancia. Agradecemos su comprensión y apoyo en esta gestión. La constancia de estudio será un documento valioso para futuras solicitudes y trámites académicos.`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_constancias[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/misa1")) {
+    bot.editMessageText(
+      `¡Bienvenidos a nuestra misa del día lunes! Los invitamos a unirse a nosotros en un momento de fe y reflexión. Durante esta celebración, nos reuniremos para orar juntos, escuchar la palabra de Dios y fortalecer nuestra espiritualidad. Esperamos que esta misa sea un espacio de paz y renovación para todos. ¡Los esperamos con alegría!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_misa[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/misa2")) {
+    bot.editMessageText(
+      `Les recordamos que el día jueves tendremos una misa especial. Los invitamos a unirse a nosotros en este encuentro de fe y comunidad. Durante la misa, compartiremos momentos de oración, reflexión y alabanza. Es una oportunidad para reafirmar nuestra conexión con lo divino y encontrar consuelo en la palabra de Dios. ¡Esperamos contar con su presencia!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_misa[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/misa3")) {
+    bot.editMessageText(
+      `¡Bienvenidos a nuestra misa dominical! Los invitamos a unirse a nosotros en este sagrado día de adoración y comunión. Durante la misa, nos reuniremos como comunidad para celebrar la presencia de Dios en nuestras vidas. Escucharemos lecturas bíblicas, entonaremos himnos de alabanza y compartiremos juntos la Eucaristía. Esperamos que esta misa sea un momento de inspiración espiritual y renovación para todos. ¡Les esperamos con los brazos abiertos!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_misa[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta1")) {
+    bot.editMessageText(
+      `¡Ven y únete al increíble Carnaval del Liceo del 12 de febrero al 13 de de abril de 2024! Sumérgete en un mundo de magia, color y diversión sin límites. Disfruta de deslumbrantes desfiles de carnaval, emocionantes juegos, competencias de disfraces, música en vivo y una amplia variedad de comida y bebida. Además, celebra la diversidad cultural y promueve el compañerismo a través de talleres y actividades educativas. ¡No te pierdas esta fiesta inolvidable!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta2")) {
+    bot.editMessageText(
+      `¡Ven y celebra la Semana Santa en grande del 24 al 30 de marzo de 2024! Sumérgete en una experiencia llena de tradición, espiritualidad y diversión. Disfruta de procesiones religiosas, actividades culturales, concursos, música en vivo y una variedad de deliciosos platos típicos. Además, aprovecha para reflexionar y conectar con tu espiritualidad en este tiempo especial. ¡No te pierdas esta emocionante celebración de la Semana Santa!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta3")) {
+    bot.editMessageText(
+      `¡Atención a todos! Les informamos que se acerca la predefensa del Grupo 6. Prepárense para mostrar todo su esfuerzo y conocimiento en esta importante etapa. Durante la predefensa, tendrán la oportunidad de presentar sus proyectos, responder preguntas y recibir retroalimentación valiosa. Asegúrense de estar preparados y demostrar su mejor trabajo. ¡Buena suerte a todos en esta próxima etapa crucial!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta4")) {
+    bot.editMessageText(
+      `¡Anuncio importante para todos los interesados! Les informamos que se acerca la emocionante defensa de tesis, que se llevará a cabo del 27 al 29 de febrero de 2024. Es el momento culminante en el que nuestros estudiantes presentarán sus proyectos de investigación y compartirán los resultados de sus arduos esfuerzos. Acompáñennos para presenciar presentaciones innovadoras, debates académicos y la brillantez de nuestras mentes creativas. ¡No se pierdan esta oportunidad de celebrar el conocimiento y el logro académico!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta5")) {
+    bot.editMessageText(
+      `¡Es un honor compartir con todos ustedes la emocionante noticia de nuestra próxima graduación! Después de años de arduo trabajo, dedicación y perseverancia, nuestros estudiantes están listos para dar un gran paso hacia el futuro. La graduación será un momento especial en el cual celebraremos sus logros, reconociendo su esfuerzo y determinación. Será una ceremonia llena de alegría, orgullo y promesas de nuevos comienzos. Acompáñenos para aplaudir a nuestros graduados y desearles éxito en sus futuras aventuras. ¡No se pierdan este memorable evento de celebración y trascendencia!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/boletin1")) {
+    bot.editMessageText(
+      `¡Atención a todos los padres y estudiantes! Les informamos que podrán retirar los boletines de calificaciones el día viernes. Para obtener el boletín, se requerirá un pago de 10 dólares por cada copia. Este monto ayudará a cubrir los costos de impresión y administración. Asegúrense de traer el dinero exacto al momento de recoger su boletín. Agradecemos su comprensión y apoyo en esta importante gestión.`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_boletin[section].reply_markup,
+      }
+    );
   }
 });
 //
@@ -637,31 +762,60 @@ bot.on("callback_query", (callbackQuery) => {
   };
   const opciones_misa = {
     //Botones que vienen en la opción de horario"
-
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a misas", callback_data: "/misa" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a misas", callback_data: "/misa,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a misas", callback_data: "/misa,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_fiesta = {
-    //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a fiestas", callback_data: "/fiesta" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      //Botones que vienen en la opción de horario"
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a fiestas", callback_data: "/fiesta,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a fiestas", callback_data: "/fiesta,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
   const opciones_boletin = {
     //Botones que vienen en la opción de horario"
-    reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [{ text: "Volver a boletin", callback_data: "/boletin" }],
-        [{ text: "Volver al inicio", callback_data: "/volver" }],
-      ],
-    }),
+    A: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a boletin", callback_data: "/boletin,A" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
+    B: {
+      reply_markup: JSON.stringify({
+        inline_keyboard: [
+          [{ text: "Volver a boletin", callback_data: "/boletin,B" }],
+          [{ text: "Volver al inicio", callback_data: "/volver" }],
+        ],
+      }),
+    },
   };
 
   const messageId = callbackQuery.message.message_id;
@@ -689,54 +843,105 @@ bot.on("callback_query", (callbackQuery) => {
       message_id: messageId,
       reply_markup: opciones_actividad.reply_markup,
     });
-  } else if (comando === "/constancia1") {
-    bot.editMessageText(`Más Información sobre las constancias`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_constancias.reply_markup,
-    });
-  } else if (comando === "/misa1") {
-    bot.editMessageText(`Más información sobre misa 1...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_misa.reply_markup,
-    });
-  } else if (comando === "/misa2") {
-    bot.editMessageText(`Más información sobre misa 2...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_misa.reply_markup,
-    });
-  } else if (comando === "/misa3") {
-    bot.editMessageText(`Más información sobre misa 3...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_misa.reply_markup,
-    });
-  } else if (comando === "/fiesta1") {
-    bot.editMessageText(`Información sobre la fiesta 1...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_fiesta.reply_markup,
-    });
-  } else if (comando === "/fiesta2") {
-    bot.editMessageText(`Información sobre la fiesta 2...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_fiesta.reply_markup,
-    });
-  } else if (comando === "/fiesta3") {
-    bot.editMessageText(`Información sobre la fiesta 3...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_fiesta.reply_markup,
-    });
-  } else if (comando === "/boletin1") {
-    bot.editMessageText(`Mas información sobre los boletines...`, {
-      chat_id: chatId,
-      message_id: messageId,
-      reply_markup: opciones_boletin.reply_markup,
-    });
+  } else if (comando.startsWith("/constancia1")) {
+    bot.editMessageText(
+      `¡Atención a todos los padres y estudiantes de primaria! Les informamos que podrán retirar las constancias de estudio los días lunes y martes. Para obtener la constancia, se requerirá un pago de 3 dólares por cada copia. Este monto ayudará a cubrir los gastos administrativos asociados. Asegúrense de traer el dinero exacto al momento de recoger la constancia. Agradecemos su colaboración y les recordamos que la constancia es un documento importante para futuros trámites académicos.`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_constancias[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/constancia2")) {
+    bot.editMessageText(
+      `¡Anuncio importante para los estudiantes de secundaria y sus familias! Les informamos que podrán retirar las constancias de estudio los días jueves y viernes. Para obtener la constancia, se requerirá un pago de 5 dólares por cada copia. Este monto contribuirá a cubrir los costos administrativos y de impresión. Por favor, asegúrense de traer la cantidad exacta al momento de recoger la constancia. Agradecemos su comprensión y apoyo en esta gestión. La constancia de estudio será un documento valioso para futuras solicitudes y trámites académicos.`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_constancias[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/misa1")) {
+    bot.editMessageText(
+      `¡Bienvenidos a nuestra misa del día lunes! Los invitamos a unirse a nosotros en un momento de fe y reflexión. Durante esta celebración, nos reuniremos para orar juntos, escuchar la palabra de Dios y fortalecer nuestra espiritualidad. Esperamos que esta misa sea un espacio de paz y renovación para todos. ¡Los esperamos con alegría!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_misa[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/misa2")) {
+    bot.editMessageText(
+      `Les recordamos que el día jueves tendremos una misa especial. Los invitamos a unirse a nosotros en este encuentro de fe y comunidad. Durante la misa, compartiremos momentos de oración, reflexión y alabanza. Es una oportunidad para reafirmar nuestra conexión con lo divino y encontrar consuelo en la palabra de Dios. ¡Esperamos contar con su presencia!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_misa[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/misa3")) {
+    bot.editMessageText(
+      `¡Bienvenidos a nuestra misa dominical! Los invitamos a unirse a nosotros en este sagrado día de adoración y comunión. Durante la misa, nos reuniremos como comunidad para celebrar la presencia de Dios en nuestras vidas. Escucharemos lecturas bíblicas, entonaremos himnos de alabanza y compartiremos juntos la Eucaristía. Esperamos que esta misa sea un momento de inspiración espiritual y renovación para todos. ¡Les esperamos con los brazos abiertos!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_misa[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta1")) {
+    bot.editMessageText(
+      `¡Ven y únete al increíble Carnaval del Liceo del 12 de febrero al 13 de de abril de 2024! Sumérgete en un mundo de magia, color y diversión sin límites. Disfruta de deslumbrantes desfiles de carnaval, emocionantes juegos, competencias de disfraces, música en vivo y una amplia variedad de comida y bebida. Además, celebra la diversidad cultural y promueve el compañerismo a través de talleres y actividades educativas. ¡No te pierdas esta fiesta inolvidable!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta2")) {
+    bot.editMessageText(
+      `¡Ven y celebra la Semana Santa en grande del 24 al 30 de marzo de 2024! Sumérgete en una experiencia llena de tradición, espiritualidad y diversión. Disfruta de procesiones religiosas, actividades culturales, concursos, música en vivo y una variedad de deliciosos platos típicos. Además, aprovecha para reflexionar y conectar con tu espiritualidad en este tiempo especial. ¡No te pierdas esta emocionante celebración de la Semana Santa!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta3")) {
+    bot.editMessageText(
+      `¡Atención a todos! Les informamos que se acerca la predefensa del Grupo 6. Prepárense para mostrar todo su esfuerzo y conocimiento en esta importante etapa. Durante la predefensa, tendrán la oportunidad de presentar sus proyectos, responder preguntas y recibir retroalimentación valiosa. Asegúrense de estar preparados y demostrar su mejor trabajo. ¡Buena suerte a todos en esta próxima etapa crucial!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta4")) {
+    bot.editMessageText(
+      `¡Anuncio importante para todos los interesados! Les informamos que se acerca la emocionante defensa de tesis, que se llevará a cabo del 27 al 29 de febrero de 2024. Es el momento culminante en el que nuestros estudiantes presentarán sus proyectos de investigación y compartirán los resultados de sus arduos esfuerzos. Acompáñennos para presenciar presentaciones innovadoras, debates académicos y la brillantez de nuestras mentes creativas. ¡No se pierdan esta oportunidad de celebrar el conocimiento y el logro académico!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/fiesta5")) {
+    bot.editMessageText(
+      `¡Es un honor compartir con todos ustedes la emocionante noticia de nuestra próxima graduación! Después de años de arduo trabajo, dedicación y perseverancia, nuestros estudiantes están listos para dar un gran paso hacia el futuro. La graduación será un momento especial en el cual celebraremos sus logros, reconociendo su esfuerzo y determinación. Será una ceremonia llena de alegría, orgullo y promesas de nuevos comienzos. Acompáñenos para aplaudir a nuestros graduados y desearles éxito en sus futuras aventuras. ¡No se pierdan este memorable evento de celebración y trascendencia!`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_fiesta[section].reply_markup,
+      }
+    );
+  } else if (comando.startsWith("/boletin1")) {
+    bot.editMessageText(
+      `¡Atención a todos los padres y estudiantes! Les informamos que podrán retirar los boletines de calificaciones el día viernes. Para obtener el boletín, se requerirá un pago de 10 dólares por cada copia. Este monto ayudará a cubrir los costos de impresión y administración. Asegúrense de traer el dinero exacto al momento de recoger su boletín. Agradecemos su comprensión y apoyo en esta importante gestión.`,
+      {
+        chat_id: chatId,
+        message_id: messageId,
+        reply_markup: opciones_boletin[section].reply_markup,
+      }
+    );
   }
 });
 //
