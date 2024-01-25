@@ -395,7 +395,6 @@ bot.on("callback_query", (callbackQuery) => {
       message_id: messageId,
       reply_markup: sectionSelector(section).reply_markup,
     });
-    //respondemos esto y le pasamos un botón con el que puede volver
   } else if (comando.startsWith("/horario")) {
     bot.editMessageText(
       `🏫 Información sobre horarios de la sección '${section}': \n\n🟢Lunes, de 7:00AM hasta 12:00PM\n\n🟢Martes, de 7:00AM hasta 5:00PM\n\n🔴Miércoles, no hay clases\n\n🟢Jueves, de 7:00AM hasta 9:00AM\n\n🟢Viernes, de 10:00AM hasta 12:00PM
@@ -406,10 +405,9 @@ bot.on("callback_query", (callbackQuery) => {
         reply_markup: opciones_horario[section].reply_markup,
       }
     );
-    //respondemos esto y le pasamos un botón con el que puede volver
   } else if (comando.startsWith("/constancias")) {
     bot.editMessageText(
-      `Información sobre constancias...de la sección ${section}...\n\n*Primaria - Lunes y Martes (3$)\n\n*Secundaria - Jueves y viernes (5$)`,
+      `Información sobre constancias de la sección ${section}...\n\n*Primaria - Lunes y Martes (3$)\n\n*Secundaria - Jueves y viernes (5$)`,
       {
         chat_id: chatId,
         message_id: messageId,
